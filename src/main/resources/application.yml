@@ -1,0 +1,26 @@
+server:
+  ssl:
+    key-store: classpath:harshal.jks
+    key-store-password: changeit
+    key-store-type: jks
+    key-alias: harshal
+    key-password: changeit  port: 8080
+  
+  
+# 1) command to generate a Certificate and KeyStore using JKS Store
+# keytool -genkeypair -alias springboot -keyalg RSA -keysize 4096 -storetype JKS -keystore springboot.jks -validity 3650 -storepass password
+
+# 2) command to generate a Certificate and KeyStore using PKCS12 Store
+# keytool -genkeypair -alias springboot -keyalg RSA -keysize 4096 -storetype PKCS12 -keystore springboot.p12 -validity 3650 -storepass password
+
+# 3) Verify the Content of the Keystore
+# keytool -list -v -keystore springboot.jks
+
+# 4) Convert a JKS Keystore (java based applications) to a global more recognized PKCS12 Keystore
+# keytool -importkeystore -srckeystore springboot.jks -destkeystore springboot.p12 -deststoretype pkcs12
+
+# 5) Extract the certificate from KeyStore
+# keytool -export -keystore springboot.p12 -alias springboot -file myCertificate.crt
+
+# 6) Add the external certificate to cacerts store responsible for containing all the trusted certificates
+# keytool -importcert -file myCertificate.crt -alias springboot -keystore $JDK_HOME/jre/lib/security/cacerts
